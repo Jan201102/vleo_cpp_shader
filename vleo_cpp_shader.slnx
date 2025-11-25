@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="vleo_cpp_shader/vleo_cpp_shader.vcxproj" />
+</Solution>
