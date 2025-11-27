@@ -3,6 +3,10 @@
 #include <iostream>
 #include "OpenGLUtils.h"
 
+//math includes
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
     // Initialize GLFW
@@ -44,27 +48,41 @@ int main(void)
          0.5f, -0.5f, 0.0f,  // Bottom right
          0.0f,  0.5f, 0.0f   // Top
     };
+
+    //projection matrices
+    glm::vec3 windDirection(-1.0f, 0.0f, 0.0f);
+    float cameraDistance = std::sqrt(3);
+    glm::vec3 camera_position = -windDirection * cameraDistance / glm::length(windDirection);
+
+    glm::mat4 orthoProj = glm::ortho(-cameraDistance,cameraDistance, -cameraDistance, cameraDistance, -cameraDistance, cameraDistance);
+    glm::mat4 view = glm::lookAt(
+        camera_position, // Camera position
+        glm::vec3(0.0f, 0.0f, 0.0f), // Look at point
+        glm::vec3(0.0f, 0.0f, -1.0f)  // Up vector -z is up in aerospace coordinate conventions
+    );
+    glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
+    glm::mat4 u_MVP = orthoProj * view * model;
     
     // Create and configure vertex buffer and vertex array objects
     unsigned int VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+    GLCall(glGenVertexArrays(1, &VAO));
+    GLCall(glGenBuffers(1, &VBO));
     
     // Bind VAO first, then bind and set vertex buffer(s), and then configure vertex attributes
-    glBindVertexArray(VAO);
+    GLCall(glBindVertexArray(VAO));
     
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBO));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
     
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
+    GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0));
+    GLCall(glEnableVertexAttribArray(0));
     
     // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyway so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    glBindVertexArray(0);
+    GLCall(glBindVertexArray(0));
     
     // Create shader program
     ShaderProgramSource shaderPrograms = ParseShader("res/shaders/Basic.shader");
@@ -82,8 +100,9 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT);
         
         // Draw triangle
-        glUseProgram(shaderProgram);
-        glBindVertexArray(VAO);
+        GLCall(glUseProgram(shaderProgram));
+        GLCall(glBindVertexArray(VAO));
+        GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));
         glDrawArrays(GL_TRIANGLES, 0, 3);
         
         // Swap buffers and poll IO events
@@ -92,9 +111,9 @@ int main(void)
     }
     
     // Clean up
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteProgram(shaderProgram);
+    GLCall(glDeleteVertexArrays(1, &VAO));
+    GLCall(glDeleteBuffers(1, &VBO));
+    GLCall(glDeleteProgram(shaderProgram));
     
     glfwTerminate();
     return 0;
