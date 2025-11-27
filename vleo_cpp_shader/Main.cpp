@@ -42,42 +42,91 @@ int main(void)
     
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     
-    // Triangle vertices
+    glm::vec3 v0(0.0f, -0.5f, 0.0f);  // Bottom left 
+    glm::vec3 v1(0.0f,  0.5f, 0.0f);  // Bottom right
+    glm::vec3 v2(0.0f,  0.0f, 0.5f);  // Top 
+    glm::vec3 v3(-0.5f, 0.0f, 0.0f);   // back
+
+    // Tetrahedron vertices without index buffer - 4 triangular faces
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,  // Bottom left
-         0.5f, -0.5f, 0.0f,  // Bottom right
-         0.0f,  0.5f, 0.0f   // Top
+        // Face 1: bottom (v0, v1, v3)
+        v0.x, v0.y, v0.z,
+        v1.x, v1.y, v1.z,
+        v3.x, v3.y, v3.z,
+
+        // Face 2: right back (v1, v2, v3)
+        v1.x, v1.y, v1.z,
+        v2.x, v2.y, v2.z,
+        v3.x, v3.y, v3.z,
+
+        // Face 3: left back (v2, v0, v3)
+        v2.x, v2.y, v2.z,
+        v0.x, v0.y, v0.z,
+        v3.x, v3.y, v3.z,
+
+        // Face 4: front (v0, v2, v1)
+        v0.x, v0.y, v0.z,
+        v2.x, v2.y, v2.z,
+        v1.x, v1.y, v1.z
+    };
+    float colors[] = {
+        // Face 1: Red
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
+
+        // Face 2: Green
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+
+        // Face 3: Blue
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+        0.0f, 0.0f, 1.0f,
+
+        // Face 4: Yellow
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f
     };
 
     //projection matrices
-    glm::vec3 windDirection(-1.0f, 0.0f, 0.0f);
+    glm::vec3 windDirection(0.0f, 0.0f, 1.0f);
     float cameraDistance = std::sqrt(3);
     glm::vec3 camera_position = -windDirection * cameraDistance / glm::length(windDirection);
 
-    glm::mat4 orthoProj = glm::ortho(-cameraDistance,cameraDistance, -cameraDistance, cameraDistance, -cameraDistance, cameraDistance);
+    glm::mat4 orthoProj = glm::ortho(-cameraDistance, cameraDistance, -cameraDistance, cameraDistance, -20*cameraDistance, 20*cameraDistance);
     glm::mat4 view = glm::lookAt(
         camera_position, // Camera position
         glm::vec3(0.0f, 0.0f, 0.0f), // Look at point
-        glm::vec3(0.0f, 0.0f, -1.0f)  // Up vector -z is up in aerospace coordinate conventions
+		glm::vec3(0.0f, 1.0f, 0.0f)  //TOdO problem with upvector || to winddirection?
     );
+	//glm::mat4 view = glm::mat4(1.0f); // Identity matrix for view
     glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
     glm::mat4 u_MVP = orthoProj * view * model;
     
     // Create and configure vertex buffer and vertex array objects
-    unsigned int VBO, VAO;
+    unsigned int VBO,VBOcolor, VAO;
     GLCall(glGenVertexArrays(1, &VAO));
     GLCall(glGenBuffers(1, &VBO));
+	GLCall(glGenBuffers(1, &VBOcolor));
     
     // Bind VAO first, then bind and set vertex buffer(s), and then configure vertex attributes
     GLCall(glBindVertexArray(VAO));
-    
+
+	// Vertex positions
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBO));
     GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
-    
     GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0));
     GLCall(glEnableVertexAttribArray(0));
-    
-    // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+
+	// Vertex colors
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBOcolor));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_STATIC_DRAW));
+    GLCall(glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0));
+    GLCall(glEnableVertexAttribArray(1));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
@@ -103,7 +152,7 @@ int main(void)
         GLCall(glUseProgram(shaderProgram));
         GLCall(glBindVertexArray(VAO));
         GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLES, 0, 12);
         
         // Swap buffers and poll IO events
         glfwSwapBuffers(window);
