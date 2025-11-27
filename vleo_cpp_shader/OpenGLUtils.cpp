@@ -19,23 +19,33 @@ bool GLLogCall(const char* function, const char* file, int line)
     return true;
 }
 
-unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader,const std::string& computeShader)
+unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
 {
     unsigned int program = glCreateProgram();
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
     unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-	//unsigned int cs = CompileShader(GL_COMPUTE_SHADER, computeShader);
+
 
     GLCall(glAttachShader(program, vs));
     GLCall(glAttachShader(program, fs));
-	//glAttachShader(program, cs);
 
     GLCall(glLinkProgram(program));
     GLCall(glValidateProgram(program));
 
     GLCall(glDeleteShader(vs));
     GLCall(glDeleteShader(fs));
-    //glDeleteShader(cs);
+
+    return program;
+}
+
+unsigned int CreateComputeShader(const std::string& computeShader)
+{
+    unsigned int program = glCreateProgram();
+    unsigned int cs = CompileShader(GL_COMPUTE_SHADER, computeShader);
+    GLCall(glAttachShader(program, cs));
+    GLCall(glLinkProgram(program));
+    GLCall(glValidateProgram(program));
+    GLCall(glDeleteShader(cs));
 
     return program;
 }
@@ -56,11 +66,16 @@ unsigned int CompileShader(unsigned int type, const std::string& source)
         GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
         char* message = (char*)alloca(length * sizeof(char));
         GLCall(glGetShaderInfoLog(id, length, &length, message));
-        std::cout << "failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
-            << "shader !" << std::endl;
+        // COMPUTE-SHADER FEHLERMELDUNG HINZUFÜGEN
+        const char* shaderType =
+            (type == GL_VERTEX_SHADER) ? "vertex" :
+            (type == GL_FRAGMENT_SHADER) ? "fragment" :
+            (type == GL_COMPUTE_SHADER) ? "compute" : "unknown";
+
+        std::cout << "failed to compile " << shaderType << std::endl;
         std::cout << message << std::endl;
 
-        glDeleteShader(id);
+        GLCall(glDeleteShader(id));
         return 0;
     }
     return id;

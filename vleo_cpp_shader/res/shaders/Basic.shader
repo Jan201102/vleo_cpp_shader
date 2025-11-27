@@ -1,32 +1,31 @@
 #shader vertex
 #version 330 core
 layout (location = 0) in vec3 aPos;
+layout (location = 1) in uint aColor;
 
-layout (location = 1) in vec3 aColor;
-
-flat out vec3 vColor;
+flat out uint vColor;
 
 uniform mat4 u_MVP;
 
 void main()
 {
     vColor = aColor;
-    gl_Position = u_MVP * vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    gl_Position = u_MVP * vec4(aPos, 1.0);
 }
 
 #shader fragment
 #version 330 core
-flat in vec3 vColor;
-out vec4 FragColor;
+flat in uint vColor;
+out uvec4 FragColor;
 
 void main()
 {
-    FragColor = vec4(vColor.x, vColor.y, vColor.z, 1.0f); // Orange color
+    FragColor = uvec4(vColor, 0u, 0u, 1u); // Orange color
 }
 
 #shader compute
-#version 430
-        
+#version 430   
+
 layout(local_size_x = 16, local_size_y = 16) in;
         
 // Input: framebuffer texture with triangle IDs (unsigned integer)
@@ -36,7 +35,7 @@ layout(r16ui, binding = 0) uniform uimage2D framebuffer_texture;
 layout(std430, binding = 1) buffer HistogramBuffer 
 {
     uint histogram[];
-}
+};
         
 void main() 
 {
