@@ -15,6 +15,7 @@
 #include "Shader.h"
 #include "ComputeShader.h"
 #include "Renderer.h"
+#include "FrameBuffer.h"
 
 int main(void)
 {
@@ -53,39 +54,14 @@ int main(void)
     unsigned int NUM_PIXEL = 800;
     // add framebuffer with texture to store triangle ids
     //TODO: atkuell nur byte für ids verwendet -> nur 256 triangles
-    unsigned int framebuffer, depthBuffer, IDtexture;
 
-    //FrameBuffer FB(IDtexture, NUM_PIXEL, NUM_PIXEL);
-    //FB.UnBind();
-    
-    //framebuffer erstellen
-    GLCall(glGenFramebuffers(1, &framebuffer));
-    GLCall(glBindFramebuffer(GL_FRAMEBUFFER, framebuffer));
-
-    //texture erstellen um ids aufzunehmen
+    unsigned int IDtexture;
     GLCall(glGenTextures(1, &IDtexture));
     GLCall(glBindTexture(GL_TEXTURE_2D, IDtexture));
     GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, NUM_PIXEL, NUM_PIXEL, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, nullptr));
 
-
-    //texture an framebuffer anhängen
-    GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, IDtexture, 0));
-
-    //depthbuffer hinzufügen
-    GLCall(glGenRenderbuffers(1, &depthBuffer));
-    GLCall(glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer));
-    GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, NUM_PIXEL, NUM_PIXEL));
-    GLCall(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer));
-
-    // 5. Framebuffer-Vollständigkeit prüfen
-    GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    if (status != GL_FRAMEBUFFER_COMPLETE) {
-        std::cout << "Framebuffer not complete! Status: " << status << std::endl;
-        return -1;
-    }
-
-    //Zurück zum Standard-Framebuffer
-    GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+    FrameBuffer FB(IDtexture,NUM_PIXEL, NUM_PIXEL);
+    FB.UnBind();
 
     // histogrambuffer für computeshader um pixel zu zählen
     const int MAX_TRIANGLES = 65536 - 1;
@@ -150,8 +126,7 @@ int main(void)
         //=======================
 
         // PHASE 1: Zu ID-Framebuffer rendern
-        GLCall(glBindFramebuffer(GL_FRAMEBUFFER, framebuffer));
-        /*FB.Bind();*/
+        FB.Bind();
 
         // Integer-Clear für ID-Framebuffer (Hintergrund = 0)
         GLuint clearColor[4] = { 0, 0, 0, 0 };
@@ -161,7 +136,6 @@ int main(void)
         // Triangle-IDs rendern
         shader.Bind();
         GLCall(glBindVertexArray(VAO));
-       /* GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));*/
         shader.setUniformMat4f("u_MVP", u_MVP);
         glDrawArrays(GL_TRIANGLES, 0, 12);
 
@@ -179,7 +153,6 @@ int main(void)
         // Histogram-Buffer für Compute-Shader binden (binding = 1)
         GLCall(glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, histogramBuffer));
 
-        /*GLCall(glUseProgram(computeShaderProgram));*/
         computeShader.Bind();
 
         // Compute-Shader dispatchen (16x16 Work Groups)
@@ -225,9 +198,7 @@ int main(void)
     }
     
     // Clean up
-    GLCall(glDeleteFramebuffers(1, &framebuffer));
     GLCall(glDeleteTextures(1, &IDtexture));
-    GLCall(glDeleteRenderbuffers(1, &depthBuffer));
     GLCall(glDeleteBuffers(1, &histogramBuffer));
     GLCall(glDeleteVertexArrays(1, &VAO));
     
