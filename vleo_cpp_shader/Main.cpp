@@ -10,6 +10,12 @@
 //geometry data
 #include "geometries/tetraeder.h"
 
+//custom abstractions
+#include "VertexBuffer.h"
+#include "Shader.h"
+#include "ComputeShader.h"
+#include "Renderer.h"
+
 int main(void)
 {
     // Initialize GLFW
@@ -44,10 +50,13 @@ int main(void)
     }
     
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
-
+    unsigned int NUM_PIXEL = 800;
     // add framebuffer with texture to store triangle ids
     //TODO: atkuell nur byte für ids verwendet -> nur 256 triangles
-    unsigned int framebuffer, IDtexture, depthBuffer;
+    unsigned int framebuffer, depthBuffer, IDtexture;
+
+    //FrameBuffer FB(IDtexture, NUM_PIXEL, NUM_PIXEL);
+    //FB.UnBind();
     
     //framebuffer erstellen
     GLCall(glGenFramebuffers(1, &framebuffer));
@@ -56,7 +65,8 @@ int main(void)
     //texture erstellen um ids aufzunehmen
     GLCall(glGenTextures(1, &IDtexture));
     GLCall(glBindTexture(GL_TEXTURE_2D, IDtexture));
-    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, 800, 800, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, nullptr));
+    GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_R16UI, NUM_PIXEL, NUM_PIXEL, 0, GL_RED_INTEGER, GL_UNSIGNED_SHORT, nullptr));
+
 
     //texture an framebuffer anhängen
     GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, IDtexture, 0));
@@ -64,7 +74,7 @@ int main(void)
     //depthbuffer hinzufügen
     GLCall(glGenRenderbuffers(1, &depthBuffer));
     GLCall(glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer));
-    GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 800, 800));
+    GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, NUM_PIXEL, NUM_PIXEL));
     GLCall(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer));
 
     // 5. Framebuffer-Vollständigkeit prüfen
@@ -74,7 +84,7 @@ int main(void)
         return -1;
     }
 
-    // Zurück zum Standard-Framebuffer
+    //Zurück zum Standard-Framebuffer
     GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 
     // histogrambuffer für computeshader um pixel zu zählen
@@ -92,7 +102,7 @@ int main(void)
     float cameraDistance = std::sqrt(3);
     glm::vec3 camera_position = -windDirection * cameraDistance / glm::length(windDirection);
 
-    glm::mat4 orthoProj = glm::ortho(-cameraDistance, cameraDistance, -cameraDistance, cameraDistance, -20*cameraDistance, 20*cameraDistance);
+    glm::mat4 orthoProj = glm::ortho(-cameraDistance, cameraDistance, -cameraDistance, cameraDistance, 0.0f, 2*cameraDistance);
     glm::mat4 view = glm::lookAt(
         camera_position, // Camera position
         glm::vec3(0.0f, 0.0f, 0.0f), // Look at point
@@ -103,36 +113,30 @@ int main(void)
     glm::mat4 u_MVP = orthoProj * view * model;
     
     // Create and configure vertex buffer and vertex array objects
-    unsigned int VBO,VBOID, VAO;
+    unsigned int VAO;
     GLCall(glGenVertexArrays(1, &VAO));
-    GLCall(glGenBuffers(1, &VBO));
-	GLCall(glGenBuffers(1, &VBOID));
     
     // Bind VAO first, then bind and set vertex buffer(s), and then configure vertex attributes
     GLCall(glBindVertexArray(VAO));
-
-	// Vertex positions
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBO));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW));
+    VertexBuffer vb(vertices, sizeof(vertices));
     GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0));
     GLCall(glEnableVertexAttribArray(0));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    vb.Unbind();
 
-	// Vertex colors
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, VBOID));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(triangleIDs), triangleIDs, GL_STATIC_DRAW));
+    VertexBuffer vbID(triangleIDs, sizeof(triangleIDs));
     GLCall(glVertexAttribIPointer(1, 1, GL_UNSIGNED_INT, sizeof(unsigned int), (void*)0));
     GLCall(glEnableVertexAttribArray(1));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    vbID.Unbind();
     
     // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
     // VAOs requires a call to glBindVertexArray anyway so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     GLCall(glBindVertexArray(0));
     
     // Create shader program
-    ShaderProgramSource shaderPrograms = ParseShader("res/shaders/Basic.shader");
-    unsigned int shaderProgram = CreateShader(shaderPrograms.VertexSource,shaderPrograms.FragmentSource);
-    unsigned int computeShaderProgram = CreateComputeShader(shaderPrograms.ComputeSource);
+    Shader shader("res/shaders/Basic.shader");
+    shader.Unbind();
+    ComputeShader computeShader("res/shaders/Compute.shader");
+    computeShader.Unbind();
     
     // Render loop
     while (!glfwWindowShouldClose(window))
@@ -147,6 +151,7 @@ int main(void)
 
         // PHASE 1: Zu ID-Framebuffer rendern
         GLCall(glBindFramebuffer(GL_FRAMEBUFFER, framebuffer));
+        /*FB.Bind();*/
 
         // Integer-Clear für ID-Framebuffer (Hintergrund = 0)
         GLuint clearColor[4] = { 0, 0, 0, 0 };
@@ -154,9 +159,10 @@ int main(void)
         GLCall(glClear(GL_DEPTH_BUFFER_BIT));
 
         // Triangle-IDs rendern
-        GLCall(glUseProgram(shaderProgram));
+        shader.Bind();
         GLCall(glBindVertexArray(VAO));
-        GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));
+       /* GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));*/
+        shader.setUniformMat4f("u_MVP", u_MVP);
         glDrawArrays(GL_TRIANGLES, 0, 12);
 
         // Histogram-Buffer leeren
@@ -173,10 +179,11 @@ int main(void)
         // Histogram-Buffer für Compute-Shader binden (binding = 1)
         GLCall(glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, histogramBuffer));
 
-        GLCall(glUseProgram(computeShaderProgram));
+        /*GLCall(glUseProgram(computeShaderProgram));*/
+        computeShader.Bind();
 
         // Compute-Shader dispatchen (16x16 Work Groups)
-        GLCall(glDispatchCompute((800 + 15) / 16, (600 + 15) / 16, 1));
+        GLCall(glDispatchCompute((NUM_PIXEL + 15) / 16, (NUM_PIXEL + 15) / 16, 1));
 
         // Warten bis Compute-Shader fertig ist
         GLCall(glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT));
@@ -184,10 +191,13 @@ int main(void)
         // Histogram-Ergebnisse auslesen
         GLCall(glBindBuffer(GL_SHADER_STORAGE_BUFFER, histogramBuffer));
         histogramData = (GLuint*)glMapBuffer(GL_SHADER_STORAGE_BUFFER, GL_READ_ONLY);
+        
+		bool visibleIDsFound[numTriangleIDs] = { false };
         if (histogramData) {
             std::cout << "Triangle Histogram:" << std::endl;
             for (int i = 1; i < 10; i++) { // Nur erste 10 Triangle-IDs anzeigen
                 if (histogramData[i] > 0) {
+					visibleIDsFound[i] = true;
                     std::cout << "Triangle ID " << i << ": " << histogramData[i] << " pixels" << std::endl;
                 }
             }
@@ -204,9 +214,9 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         // Draw triangle
-        GLCall(glUseProgram(shaderProgram));
+        shader.Bind();
         GLCall(glBindVertexArray(VAO));
-        GLCall(glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_MVP"), 1, GL_FALSE, &u_MVP[0][0]));
+        shader.setUniformMat4f("u_MVP", u_MVP);
         glDrawArrays(GL_TRIANGLES, 0, 12);
         
         // Swap buffers and poll IO events
@@ -220,9 +230,6 @@ int main(void)
     GLCall(glDeleteRenderbuffers(1, &depthBuffer));
     GLCall(glDeleteBuffers(1, &histogramBuffer));
     GLCall(glDeleteVertexArrays(1, &VAO));
-    GLCall(glDeleteBuffers(1, &VBO));
-    GLCall(glDeleteBuffers(1, &VBOID));
-    GLCall(glDeleteProgram(shaderProgram));
     
     glfwTerminate();
     return 0;

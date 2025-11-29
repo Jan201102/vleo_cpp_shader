@@ -2,113 +2,138 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
+#include "glm/glm.hpp"
 
 
-void GLClearError()
+MeshData LoadOBJ(const std::string& filepath)
 {
-    while (glGetError() != GL_NO_ERROR);
-}
+    std::cout << "Loading OBJ file: " << filepath << std::endl;
 
-bool GLLogCall(const char* function, const char* file, int line)
-{
-    while (GLenum error = glGetError())
-    {
-        std::cout << "[OPenGL Error] (" << error << "): " << function << " in " << file << " line: " << line << std::endl;
-        return false;
+    MeshData meshData;
+    std::ifstream file(filepath);
+
+    if (!file.is_open()) {
+        std::cout << "ERROR: Could not open OBJ file: " << filepath << std::endl;
+        return meshData;
     }
-    return true;
-}
 
-unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
+    std::vector<glm::vec3> temp_vertices;
+    std::vector<glm::vec3> temp_normals;
+    std::vector<glm::vec2> temp_texCoords;
 
-
-    GLCall(glAttachShader(program, vs));
-    GLCall(glAttachShader(program, fs));
-
-    GLCall(glLinkProgram(program));
-    GLCall(glValidateProgram(program));
-
-    GLCall(glDeleteShader(vs));
-    GLCall(glDeleteShader(fs));
-
-    return program;
-}
-
-unsigned int CreateComputeShader(const std::string& computeShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int cs = CompileShader(GL_COMPUTE_SHADER, computeShader);
-    GLCall(glAttachShader(program, cs));
-    GLCall(glLinkProgram(program));
-    GLCall(glValidateProgram(program));
-    GLCall(glDeleteShader(cs));
-
-    return program;
-}
-
-
-unsigned int CompileShader(unsigned int type, const std::string& source)
-{
-    unsigned int id = glCreateShader(type);
-    const char* src = source.c_str();
-    GLCall(glShaderSource(id, 1, &src, nullptr));
-    GLCall(glCompileShader(id));
-
-    int result;
-    GLCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
-    if (result == GL_FALSE)
-    {
-        int length;
-        GLCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-        char* message = (char*)alloca(length * sizeof(char));
-        GLCall(glGetShaderInfoLog(id, length, &length, message));
-        // COMPUTE-SHADER FEHLERMELDUNG HINZUFÜGEN
-        const char* shaderType =
-            (type == GL_VERTEX_SHADER) ? "vertex" :
-            (type == GL_FRAGMENT_SHADER) ? "fragment" :
-            (type == GL_COMPUTE_SHADER) ? "compute" : "unknown";
-
-        std::cout << "failed to compile " << shaderType << std::endl;
-        std::cout << message << std::endl;
-
-        GLCall(glDeleteShader(id));
-        return 0;
-    }
-    return id;
-}
-
-ShaderProgramSource ParseShader(const std::string& filepath) {
-    std::fstream stream(filepath);
-
-    enum class ShaderType
-    {
-		NONE = -1, VERTEX = 0, FRAGMENT = 1, COMPUTE = 2
+    // Temporäre Struktur für Faces
+    struct Face {
+        unsigned int v1, v2, v3;  // Vertex-Indizes
+        unsigned int triangleID;   // Triangle-ID für dieses Face
     };
 
-    std::string line;
-    std::stringstream ss[3]; // Correct way to declare array of stringstream
+    std::vector<Face> faces;
+    unsigned int currentTriangleID = 1;  // Start bei 1 (0 = Hintergrund)
 
-    ShaderType type = ShaderType::NONE;
-    while (getline(stream, line))
-    {
-        if (line.find("#shader") != std::string::npos)
-        {
-            if (line.find("vertex") != std::string::npos)
-                type = ShaderType::VERTEX;
-            else if (line.find("fragment") != std::string::npos)
-                type = ShaderType::FRAGMENT;
-            else if (line.find("compute") != std::string::npos)
-				type = ShaderType::COMPUTE;
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::string prefix;
+        iss >> prefix;
+
+        if (prefix == "v") {
+            // Vertex-Position parsen
+            float x, y, z;
+            iss >> x >> y >> z;
+            temp_vertices.push_back(glm::vec3(x, y, z));
+
         }
-        else
-        {
-            ss[(int)type] << line << '\n';
+        else if (prefix == "vn") {
+            // Vertex-Normal parsen (optional, für später)
+            float nx, ny, nz;
+            iss >> nx >> ny >> nz;
+            temp_normals.push_back(glm::vec3(nx, ny, nz));
+
+        }
+        else if (prefix == "vt") {
+            // Texture-Koordinaten parsen (optional)
+            float u, v;
+            iss >> u >> v;
+            temp_texCoords.push_back(glm::vec2(u, v));
+
+        }
+        else if (prefix == "f") {
+            // Face parsen
+            std::string vertex1, vertex2, vertex3;
+            iss >> vertex1 >> vertex2 >> vertex3;
+
+            // Face-Format: v/vt/vn oder v//vn oder nur v
+            auto parseVertexIndex = [](const std::string& vertexStr) -> unsigned int {
+                size_t slashPos = vertexStr.find('/');
+                if (slashPos != std::string::npos) {
+                    return std::stoi(vertexStr.substr(0, slashPos)) - 1;  // OBJ-Indizes sind 1-basiert
+                }
+                else {
+                    return std::stoi(vertexStr) - 1;
+                }
+                };
+
+            Face face;
+            face.v1 = parseVertexIndex(vertex1);
+            face.v2 = parseVertexIndex(vertex2);
+            face.v3 = parseVertexIndex(vertex3);
+            face.triangleID = currentTriangleID++;
+
+            faces.push_back(face);
+
+        }
+        else if (prefix == "o" || prefix == "g") {
+            // Objekt- oder Gruppen-Name (optional, für Material-/ID-Zuordnung)
+            std::string name;
+            iss >> name;
+            std::cout << "Found object/group: " << name << std::endl;
         }
     }
 
-    return{ ss[0].str(), ss[1].str(), ss[2].str() };
-};
+    file.close();
+
+    // Daten für OpenGL aufbereiten (ohne Index-Buffer)
+    meshData.vertices.clear();
+    meshData.triangleIDs.clear();
+
+    for (const Face& face : faces) {
+        // Vertex 1
+        if (face.v1 < temp_vertices.size()) {
+            const glm::vec3& v1 = temp_vertices[face.v1];
+            meshData.vertices.push_back(v1.x);
+            meshData.vertices.push_back(v1.y);
+            meshData.vertices.push_back(v1.z);
+            meshData.triangleIDs.push_back(face.triangleID);
+        }
+
+        // Vertex 2
+        if (face.v2 < temp_vertices.size()) {
+            const glm::vec3& v2 = temp_vertices[face.v2];
+            meshData.vertices.push_back(v2.x);
+            meshData.vertices.push_back(v2.y);
+            meshData.vertices.push_back(v2.z);
+            meshData.triangleIDs.push_back(face.triangleID);
+        }
+
+        // Vertex 3
+        if (face.v3 < temp_vertices.size()) {
+            const glm::vec3& v3 = temp_vertices[face.v3];
+            meshData.vertices.push_back(v3.x);
+            meshData.vertices.push_back(v3.y);
+            meshData.vertices.push_back(v3.z);
+            meshData.triangleIDs.push_back(face.triangleID);
+        }
+    }
+
+    meshData.triangleCount = faces.size();
+    meshData.vertexCount = meshData.vertices.size() / 3;
+
+    std::cout << "OBJ loaded successfully!" << std::endl;
+    std::cout << "  Vertices: " << temp_vertices.size() << std::endl;
+    std::cout << "  Faces: " << faces.size() << std::endl;
+    std::cout << "  Output vertices: " << meshData.vertexCount << std::endl;
+    std::cout << "  Output triangles: " << meshData.triangleCount << std::endl;
+
+    return meshData;
+}

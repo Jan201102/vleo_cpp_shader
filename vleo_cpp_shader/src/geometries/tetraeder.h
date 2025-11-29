@@ -40,3 +40,4 @@ unsigned int triangleIDs[] = {
     // Face 4: Yellow
     4,4,4
 };
+const unsigned int numTriangleIDs = sizeof(triangleIDs) / sizeof(unsigned int) * 3;
