@@ -8,7 +8,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 //geometry data
-#include "geometries/tetraeder.h"
+#include "res/geometries/tetraeder.h"
 
 //custom abstractions
 #include "VertexBuffer.h"
@@ -16,6 +16,7 @@
 #include "ComputeShader.h"
 #include "Renderer.h"
 #include "FrameBuffer.h"
+
 
 int main(void)
 {
@@ -32,7 +33,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     
     // Create window
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Triangle Renderer", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(800, 800, "Triangle Renderer", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -88,14 +89,13 @@ int main(void)
     glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
     glm::mat4 u_MVP = orthoProj * view * model;
     
-
     // Create and configure vertex buffer and vertex array objects
     unsigned int VAO;
     GLCall(glGenVertexArrays(1, &VAO));
     
     // Bind VAO first, then bind and set vertex buffer(s), and then configure vertex attributes
     GLCall(glBindVertexArray(VAO));
-    VertexBuffer vb(vertices, sizeof(vertices));
+    VertexBuffer vb(vertices,sizeof(vertices));
     GLCall(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0));
     GLCall(glEnableVertexAttribArray(0));
     vb.Unbind();
