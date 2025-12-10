@@ -51,10 +51,9 @@ int main(void)
     }
     
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
-    unsigned int NUM_PIXEL = 800;
-    // add framebuffer with texture to store triangle ids
-    //TODO: atkuell nur byte für ids verwendet -> nur 256 triangles
 
+    // framebuffer um ids zu zählen
+    unsigned int NUM_PIXEL = 800;
     unsigned int IDtexture;
     GLCall(glGenTextures(1, &IDtexture));
     GLCall(glBindTexture(GL_TEXTURE_2D, IDtexture));
@@ -62,6 +61,7 @@ int main(void)
 
     FrameBuffer FB(IDtexture,NUM_PIXEL, NUM_PIXEL);
     FB.UnBind();
+
 
     // histogrambuffer für computeshader um pixel zu zählen
     const int MAX_TRIANGLES = 65536 - 1;
@@ -88,6 +88,7 @@ int main(void)
     glm::mat4 model = glm::mat4(1.0f); // Identity matrix for model
     glm::mat4 u_MVP = orthoProj * view * model;
     
+
     // Create and configure vertex buffer and vertex array objects
     unsigned int VAO;
     GLCall(glGenVertexArrays(1, &VAO));
@@ -103,17 +104,18 @@ int main(void)
     GLCall(glVertexAttribIPointer(1, 1, GL_UNSIGNED_INT, sizeof(unsigned int), (void*)0));
     GLCall(glEnableVertexAttribArray(1));
     vbID.Unbind();
-    
-    // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-    // VAOs requires a call to glBindVertexArray anyway so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
     GLCall(glBindVertexArray(0));
     
+
     // Create shader program
-    Shader shader("res/shaders/Basic.shader");
+    Shader shader("res/shaders/ID.shader");
     shader.Unbind();
     ComputeShader computeShader("res/shaders/Compute.shader");
     computeShader.Unbind();
-    
+    Shader colorShader("res/shaders/Color.shader");
+    colorShader.Unbind();
+
+
     // Render loop
     while (!glfwWindowShouldClose(window))
     {
@@ -127,11 +129,7 @@ int main(void)
 
         // PHASE 1: Zu ID-Framebuffer rendern
         FB.Bind();
-
-        // Integer-Clear für ID-Framebuffer (Hintergrund = 0)
-        GLuint clearColor[4] = { 0, 0, 0, 0 };
-        GLCall(glClearBufferuiv(GL_COLOR, 0, clearColor));
-        GLCall(glClear(GL_DEPTH_BUFFER_BIT));
+		FB.Clear();
 
         // Triangle-IDs rendern
         shader.Bind();
@@ -187,7 +185,7 @@ int main(void)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         // Draw triangle
-        shader.Bind();
+        colorShader.Bind();
         GLCall(glBindVertexArray(VAO));
         shader.setUniformMat4f("u_MVP", u_MVP);
         glDrawArrays(GL_TRIANGLES, 0, 12);

@@ -42,3 +42,10 @@ void FrameBuffer::UnBind() const
 {
 	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 }
+
+void FrameBuffer::Clear() const
+{
+	GLuint clearColor[4] = { 0, 0, 0, 0 };
+	GLCall(glClearBufferuiv(GL_COLOR, 0, clearColor));
+	GLCall(glClear(GL_DEPTH_BUFFER_BIT));
+}
