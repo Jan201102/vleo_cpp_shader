@@ -19,7 +19,8 @@ private:
 	std::unordered_map<std::string, int> m_UniformLocationCache;
 
 public:
-	Shader(const std::string& filepath);
+	// Construct from embedded/source strings
+	Shader(const std::string& vertexSource, const std::string& fragmentSource, bool fromSource);
 	~Shader();
 
 	void Bind() const;
@@ -33,5 +34,5 @@ private:
 	int GetUniformLocation(const std::string& name);
 	unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
 	unsigned int CompileShader(unsigned int type, const std::string& source);
-	ShaderProgramSource ParseShader(const std::string& filepath);
+	// ParseShader removed - shaders are embedded
 };

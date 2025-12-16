@@ -1,17 +1,19 @@
 #include "ComputeShader.h"
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
 
 #include "Renderer.h"
 
-ComputeShader::ComputeShader(const std::string& filepath)
-    : m_FilePath(filepath), m_ComputeShaderID(0)
+// Constructor: create compute shader directly from provided source string
+ComputeShader::ComputeShader(const std::string& computeSource, bool fromSource)
+    : m_FilePath(""), m_ComputeShaderID(0)
 {
-    ComputeShaderProgramSource source = ParseShader(filepath);
-    m_ComputeShaderID = CreateShader(source.ComputeSource);
+    if (computeSource.empty()) {
+        std::cerr << "ComputeShader::ComputeShader - empty source" << std::endl;
+        return;
+    }
+    m_ComputeShaderID = CreateShader(computeSource);
 }
 
 ComputeShader::~ComputeShader()
@@ -56,6 +58,11 @@ unsigned int ComputeShader::CreateShader(const std::string& source)
     unsigned int program = glCreateProgram();
     unsigned int cs = CompileShader(GL_COMPUTE_SHADER, source);
 
+    if (cs == 0) {
+        std::cerr << "ComputeShader::CreateShader - compute shader compilation failed, abort linking." << std::endl;
+        return 0;
+    }
+
     glAttachShader(program, cs);
     glLinkProgram(program);
     glValidateProgram(program);
@@ -67,6 +74,11 @@ unsigned int ComputeShader::CreateShader(const std::string& source)
 
 unsigned int ComputeShader::CompileShader(unsigned int type, const std::string& source)
 {
+    if (source.empty()) {
+        std::cerr << "CompileShader: empty source" << std::endl;
+        return 0;
+    }
+
     unsigned int id = glCreateShader(type);
     const char* src = source.c_str();
     glShaderSource(id, 1, &src, nullptr);
@@ -78,35 +90,22 @@ unsigned int ComputeShader::CompileShader(unsigned int type, const std::string& 
     {
         int length;
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)alloca(length * sizeof(char));
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "failed to compile compute shader !" << std::endl;
-        std::cout << message << std::endl;
+        std::string message(length, '\0');
+        glGetShaderInfoLog(id, length, &length, &message[0]);
+        std::cerr << "Failed to compile compute shader!\nInfoLog:\n" << message << std::endl;
+
+        const GLubyte* glVersion = glGetString(GL_VERSION);
+        const GLubyte* glslVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
+        std::cerr << "OpenGL: " << (glVersion ? reinterpret_cast<const char*>(glVersion) : "unknown")
+            << "\nGLSL: " << (glslVersion ? reinterpret_cast<const char*>(glslVersion) : "unknown") << std::endl;
+
+        const size_t maxDump = 4096;
+        std::cerr << "Compute shader source (truncated to " << maxDump << " chars):\n"
+            << source.substr(0, std::min(source.size(), maxDump)) << std::endl;
 
         glDeleteShader(id);
         return 0;
     }
     return id;
-}
-
-
-ComputeShaderProgramSource ComputeShader::ParseShader(const std::string& filepath) {
-    std::fstream stream(filepath);
-
-    enum class ShaderType
-    {
-        NONE = -1, VERTEX = 0, FRAGMENT = 1
-    };
-
-    std::string line;
-    std::stringstream ss[1]; // Correct way to declare array of stringstream
-
-    ShaderType type = ShaderType::NONE;
-    while (getline(stream, line))
-    {
-            ss[0] << line << '\n';
-
-    }
-    return { ss[0].str()};
 }
 

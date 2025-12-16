@@ -1,4 +1,5 @@
-#include "BinaryRenderer.h"
+#pragma once
+#include "BinaryShader.h"
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -14,6 +15,11 @@
 #include "ComputeShader.h"
 #include "Renderer.h"
 #include "FrameBuffer.h"
+
+// embedded shader headers
+#include "res/shaders/ID_shader.h"
+#include "res/shaders/Compute_shader.h"
+#include "res/shaders/Color_shader.h"
 
 
 int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleIDs[], size_t lenTriangleIDs, bool shaded[], size_t lenShaded,
@@ -107,12 +113,12 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         GLCall(glBindVertexArray(0));
 
 
-        // Create shader program
-        Shader shader("res/shaders/ID.shader");
+        // Create shader program from embedded sources
+        Shader shader(ID_vertex_shader, ID_fragment_shader, true);
         shader.Unbind();
-        ComputeShader computeShader("res/shaders/Compute.shader");
+        ComputeShader computeShader(Compute_shader, true);
         computeShader.Unbind();
-        Shader colorShader("res/shaders/Color.shader");
+        Shader colorShader(Color_vertex_shader, Color_fragment_shader, true);
         colorShader.Unbind();
 
 

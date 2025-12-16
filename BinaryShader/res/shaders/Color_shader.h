@@ -1,4 +1,6 @@
-#shader vertex
+#pragma once
+
+inline constexpr const char* Color_vertex_shader = R"GLSL(
 #version 330 core
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in uint aColor;
@@ -18,8 +20,9 @@ void main()
     vColor = vec4(r, g, b, a);
     gl_Position = u_MVP * vec4(aPos, 1.0);
 }
+)GLSL";
 
-#shader fragment
+inline constexpr const char* Color_fragment_shader = R"GLSL(
 #version 330 core
 flat in vec4 vColor;
 out vec4 FragColor;
@@ -29,3 +32,4 @@ void main()
     FragColor = vColor; // Orange color
 
 }
+)GLSL";
