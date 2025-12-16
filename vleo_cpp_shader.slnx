@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="vleo_cpp_shader/vleo_cpp_shader.vcxproj" />
+  <Project Path="BinaryShader/BinaryShader.vcxproj" Id="1b7e55d1-133e-4512-bfd6-d595094c5069" />
+  <Project Path="vleo_cpp_shader/vleo_cpp_shader.vcxproj" Id="5c26f24d-21ba-4859-a5af-0f788e76abec" />
 </Solution>
