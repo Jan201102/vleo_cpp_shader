@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MF0 version="1.1" packageUris="http://schema.mathworks.com/mf0/cxxfe_ast/R2024b http://schema.mathworks.com/mf0/cxxfe_ast_annotations/20180710">
+  <mwAnnotation.FunctionAnnotation type="mwAnnotation.FunctionAnnotation" uuid="61ce1a17-f643-47ec-97fd-9a10ad626f1f"/>
+  <cxxfe.ast.Project type="cxxfe.ast.Project" uuid="790d41ba-15dd-4aa2-9aef-cc56c9dc7a22">
+    <Compilations type="cxxfe.ast.source.CompilationUnit" uuid="ad0e0bd1-0f79-4b5f-871a-8b911c5351da">
+      <Files type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377"/>
+      <Language>CXX</Language>
+      <Annotations type="mwAnnotation.AbsolutePathBuildInfo" uuid="76c4874d-500d-4051-95c3-68e4b55e772b">
+        <additionalCompilerFlags></additionalCompilerFlags>
+        <additionalLinkerFlags></additionalLinkerFlags>
+        <definedMacros>GLEW_STATIC</definedMacros>
+        <fundamentalArrays type="mwAnnotation.FundamentalArray" uuid="06f5fdd3-a8ec-4f23-9e2f-e532eb26190e"/>
+        <fundamentalArrays type="mwAnnotation.FundamentalArray" uuid="0a6cd610-8d77-4507-af49-2a9203a44c58"/>
+        <fundamentalArrays type="mwAnnotation.FundamentalArray" uuid="fe0cda3a-889a-40fa-acb4-ca7959374833"/>
+        <headers>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\BinaryShader.h</headers>
+        <headersRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\BinaryShader.h</headersRelative>
+        <includePaths>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\src\vendor\glm</includePaths>
+        <includePaths>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLEW\include</includePaths>
+        <includePaths>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLFW\include</includePaths>
+        <includePathsRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\src\vendor\glm</includePathsRelative>
+        <includePathsRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLEW\include</includePathsRelative>
+        <includePathsRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLFW\include</includePathsRelative>
+        <libraries>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\x64\Release\BinaryShader.lib</libraries>
+        <libraries>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLEW\lib\Release\x64\glew32s.lib</libraries>
+        <libraries>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLFW\lib-vc2022\glfw3.lib</libraries>
+        <libraries>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\opengl32.lib</libraries>
+        <libraries>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\user32.lib</libraries>
+        <libraries>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\gdi32.lib</libraries>
+        <libraries>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\shell32.lib</libraries>
+        <librariesRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\x64\Release\BinaryShader.lib</librariesRelative>
+        <librariesRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLEW\lib\Release\x64\glew32s.lib</librariesRelative>
+        <librariesRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLFW\lib-vc2022\glfw3.lib</librariesRelative>
+        <librariesRelative>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\opengl32.lib</librariesRelative>
+        <librariesRelative>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\user32.lib</librariesRelative>
+        <librariesRelative>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\gdi32.lib</librariesRelative>
+        <librariesRelative>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\shell32.lib</librariesRelative>
+        <location>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader</location>
+        <locationRelative>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader</locationRelative>
+        <verbose>true</verbose>
+        <libData type="mwAnnotation.LibraryAnnotation" uuid="9f9b2292-72f9-4e92-b6cd-222787cb6b57">
+          <architecture>win64</architecture>
+          <matlabVersion>R2025b</matlabVersion>
+          <packageName>BinaryShader</packageName>
+        </libData>
+      </Annotations>
+      <Constants type="cxxfe.ast.constants.TemplateParamConstant" uuid="73d48ad8-38f3-41d6-b347-7ae00d6a850b">
+        <Name>N</Name>
+        <Type type="cxxfe.ast.types.TemplateParamType" uuid="02634e6f-3a04-45dd-bec0-2add4cca1346"/>
+      </Constants>
+      <Constants type="cxxfe.ast.constants.TemplateParamConstant" uuid="edd80ac1-92de-4e4d-9b11-ce37f502f0d9">
+        <Name>N</Name>
+        <Type type="cxxfe.ast.types.TemplateParamType" uuid="c55a6074-9d99-431d-b62a-6918074eb3f4"/>
+      </Constants>
+      <Symbols type="cxxfe.ast.types.StructType" uuid="ad53506f-f80c-4ccd-91bc-cac1921ba1b9">
+        <Linkage>ExternalCXX</Linkage>
+        <NeedsImplicitConstructor>true</NeedsImplicitConstructor>
+        <NeedsImplicitCopyConstructor>true</NeedsImplicitCopyConstructor>
+        <AssocTemplate type="cxxfe.ast.Template" uuid="868bc732-7b93-4fbf-85fc-439d7de15770"/>
+        <IsIncomplete>true</IsIncomplete>
+        <IsTemplatePrototype>true</IsTemplatePrototype>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="16438af7-d293-4792-9e45-a7a4dff51275">
+          <Kind>TemplateTemplate</Kind>
+          <Name>templateTemplateParam</Name>
+        </TemplateArgs>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="9a3f966c-5e72-4d71-934b-60d0f72fdb3d">
+          <Kind>Type</Kind>
+          <Type type="cxxfe.ast.types.TemplateParamType" uuid="02634e6f-3a04-45dd-bec0-2add4cca1346"/>
+        </TemplateArgs>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="fac0cf23-402f-435e-98b3-23947a81485c">
+          <Kind>NonType</Kind>
+          <Val type="cxxfe.ast.constants.TemplateParamConstant" uuid="73d48ad8-38f3-41d6-b347-7ae00d6a850b"/>
+        </TemplateArgs>
+        <Name>__make_integer_seq</Name>
+        <Annotations type="mwAnnotation.ClassAnnotation" uuid="d8b79d73-8174-4945-93da-02904816771e">
+          <integrationStatus type="mwAnnotation.IntegrationStatus" uuid="7d2ee22b-3f84-4ad4-967f-05e1ec0b7dff">
+            <definitionStatus>Inaccessible</definitionStatus>
+          </integrationStatus>
+        </Annotations>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Template" uuid="868bc732-7b93-4fbf-85fc-439d7de15770">
+        <Kind>Class</Kind>
+        <ProtoTypeInstantiation type="cxxfe.ast.types.StructType" uuid="ad53506f-f80c-4ccd-91bc-cac1921ba1b9"/>
+        <Name>__make_integer_seq</Name>
+        <Scope type="cxxfe.ast.Scope" uuid="a9d061c9-c9ab-40b4-a73a-3f79500f6801">
+          <Symbols type="cxxfe.ast.types.TemplateParamType" uuid="02634e6f-3a04-45dd-bec0-2add4cca1346">
+            <Name>T</Name>
+          </Symbols>
+        </Scope>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.TypedefType" uuid="9ff7d4b9-77b9-4a84-bab7-869fab0bac99">
+        <AssocTemplate type="cxxfe.ast.Template" uuid="7b57d89c-7c1c-4fef-9062-823ca4c7eb0e"/>
+        <IsAlias>true</IsAlias>
+        <IsDependent>true</IsDependent>
+        <IsPrototypeInstantiation>true</IsPrototypeInstantiation>
+        <IsTemplateAlias>true</IsTemplateAlias>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="4082928a-986f-48d8-88ba-1e1ce566f4d9">
+          <Kind>TemplateTemplate</Kind>
+          <Name>templateTemplateParam</Name>
+        </TemplateArgs>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="abd26133-2a31-4138-8cf4-4c9f7eecbb86">
+          <Kind>Type</Kind>
+          <Type type="cxxfe.ast.types.TemplateParamType" uuid="c55a6074-9d99-431d-b62a-6918074eb3f4"/>
+        </TemplateArgs>
+        <TemplateArgs type="cxxfe.ast.TemplateArg" uuid="c85bd4bf-dc28-4636-8c17-9b413f4379fb">
+          <Kind>NonType</Kind>
+          <Val type="cxxfe.ast.constants.TemplateParamConstant" uuid="edd80ac1-92de-4e4d-9b11-ce37f502f0d9"/>
+        </TemplateArgs>
+        <Type type="cxxfe.ast.types.TemplateParamType" uuid="c55a6074-9d99-431d-b62a-6918074eb3f4"/>
+        <Name>__make_integer_seq_alias</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Template" uuid="7b57d89c-7c1c-4fef-9062-823ca4c7eb0e">
+        <Kind>Class</Kind>
+        <ProtoTypeInstantiation type="cxxfe.ast.types.TypedefType" uuid="9ff7d4b9-77b9-4a84-bab7-869fab0bac99"/>
+        <Name>__make_integer_seq_alias</Name>
+        <Scope type="cxxfe.ast.Scope" uuid="b31e59b3-72c6-4498-a66b-2041e9e53150">
+          <Symbols type="cxxfe.ast.types.TemplateParamType" uuid="c55a6074-9d99-431d-b62a-6918074eb3f4">
+            <Name>T</Name>
+          </Symbols>
+        </Scope>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc">
+        <Type type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e"/>
+        <Name>size_t</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e">
+        <IsSigned>false</IsSigned>
+        <Kind>UnsignedLongLong</Kind>
+        <NumBits>64</NumBits>
+        <Name>unsigned long long</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.FunctionType" uuid="deaaca8d-fd57-4951-9fff-f38f17543961">
+        <IsPrototyped>true</IsPrototyped>
+        <ParamTypes type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e"/>
+        <RetType type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522">
+        <Type type="cxxfe.ast.types.VoidType" uuid="2e1472d5-a9f4-4646-9289-ce050218a42e"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.VoidType" uuid="2e1472d5-a9f4-4646-9289-ce050218a42e">
+        <Name>void</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Function" uuid="893d1d1a-e802-4ac1-aabb-19207ef394ea">
+        <IsCompilerGenerated>true</IsCompilerGenerated>
+        <Params type="cxxfe.ast.Variable" uuid="a7f628c2-5d11-4114-83c2-eeade94d5909">
+          <Type type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e"/>
+        </Params>
+        <SpecialKind>Operator</SpecialKind>
+        <Linkage>ExternalCXX</Linkage>
+        <StorageClass>Extern</StorageClass>
+        <Type type="cxxfe.ast.types.FunctionType" uuid="deaaca8d-fd57-4951-9fff-f38f17543961"/>
+        <Name>operator new</Name>
+        <Annotations type="mwAnnotation.FunctionAnnotation" uuid="e686d4ba-403c-4e7c-b040-0de331e757e6">
+          <integrationStatus type="mwAnnotation.IntegrationStatus" uuid="6d9c6d8b-8dd1-414a-b61f-e86d2a325cfe">
+            <definitionStatus>Inaccessible</definitionStatus>
+          </integrationStatus>
+        </Annotations>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.FunctionType" uuid="b37dad4e-91ff-496d-af20-d31804be8540">
+        <IsPrototyped>true</IsPrototyped>
+        <ParamTypes type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522"/>
+        <RetType type="cxxfe.ast.types.VoidType" uuid="2e1472d5-a9f4-4646-9289-ce050218a42e"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Function" uuid="89d50998-0a8e-493b-9665-b27f85c1fe11">
+        <IsCompilerGenerated>true</IsCompilerGenerated>
+        <Params type="cxxfe.ast.Variable" uuid="2c770582-b9e7-49a1-b401-55e16721e5fb">
+          <Type type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522"/>
+        </Params>
+        <SpecialKind>Operator</SpecialKind>
+        <Linkage>ExternalCXX</Linkage>
+        <StorageClass>Extern</StorageClass>
+        <Type type="cxxfe.ast.types.FunctionType" uuid="b37dad4e-91ff-496d-af20-d31804be8540"/>
+        <Name>operator delete</Name>
+        <Annotations type="mwAnnotation.FunctionAnnotation" uuid="acb1caad-fc6a-42c7-96c5-843da73e260c">
+          <integrationStatus type="mwAnnotation.IntegrationStatus" uuid="979e5b94-a4c1-4d91-85ec-793518ac920e">
+            <definitionStatus>Inaccessible</definitionStatus>
+          </integrationStatus>
+        </Annotations>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.FunctionType" uuid="d61428b6-ff09-4997-bde8-25bafb5f6b3f">
+        <IsPrototyped>true</IsPrototyped>
+        <ParamTypes type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522"/>
+        <ParamTypes type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e"/>
+        <RetType type="cxxfe.ast.types.VoidType" uuid="2e1472d5-a9f4-4646-9289-ce050218a42e"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Function" uuid="24f7c660-4bdc-485e-ad4e-b79ad2ba11d2">
+        <IsCompilerGenerated>true</IsCompilerGenerated>
+        <Params type="cxxfe.ast.Variable" uuid="c9e9ecad-6a04-4f52-b60e-2bf2fb63f7f4">
+          <Type type="cxxfe.ast.types.PointerType" uuid="72b297e4-0d78-4cb0-b277-ac969e7ac522"/>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="a9179003-d7c3-4f74-9359-348d07aee243">
+          <Type type="cxxfe.ast.types.IntegerType" uuid="f0598a0f-d850-48c4-b8c7-f5dd36dc3d0e"/>
+        </Params>
+        <SpecialKind>Operator</SpecialKind>
+        <Linkage>ExternalCXX</Linkage>
+        <StorageClass>Extern</StorageClass>
+        <Type type="cxxfe.ast.types.FunctionType" uuid="d61428b6-ff09-4997-bde8-25bafb5f6b3f"/>
+        <Name>operator delete</Name>
+        <Annotations type="mwAnnotation.FunctionAnnotation" uuid="da138f5a-56fc-430c-b0ba-f3d422410c00">
+          <integrationStatus type="mwAnnotation.IntegrationStatus" uuid="a0bad045-bb95-4ae2-88ef-c44092de9bb9">
+            <definitionStatus>Inaccessible</definitionStatus>
+          </integrationStatus>
+        </Annotations>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.FunctionType" uuid="146f84a0-9fca-4b81-a57d-08cb452e073a">
+        <IsPrototyped>true</IsPrototyped>
+        <ParamTypes type="cxxfe.ast.types.PointerType" uuid="4ca5d938-68a3-4a02-a3ee-cbcf80ffb076"/>
+        <ParamTypes type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+        <ParamTypes type="cxxfe.ast.types.PointerType" uuid="63486fe9-3b7f-4e3f-b379-ca0fd51e571b"/>
+        <ParamTypes type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+        <ParamTypes type="cxxfe.ast.types.PointerType" uuid="ef968473-c745-454e-9914-83bdd1ef488c"/>
+        <ParamTypes type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+        <ParamTypes type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+        <ParamTypes type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+        <ParamTypes type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+        <RetType type="cxxfe.ast.types.IntegerType" uuid="db5afde0-7896-4b9a-990d-9f8bd21a8631"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.IntegerType" uuid="db5afde0-7896-4b9a-990d-9f8bd21a8631">
+        <NumBits>32</NumBits>
+        <Name>int</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.PointerType" uuid="4ca5d938-68a3-4a02-a3ee-cbcf80ffb076">
+        <Type type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8">
+        <Kind>Single</Kind>
+        <NumBits>32</NumBits>
+        <Name>float</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.PointerType" uuid="63486fe9-3b7f-4e3f-b379-ca0fd51e571b">
+        <Type type="cxxfe.ast.types.IntegerType" uuid="006bdf84-f771-441d-97ef-0ad620ab7daa"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.IntegerType" uuid="006bdf84-f771-441d-97ef-0ad620ab7daa">
+        <IsSigned>false</IsSigned>
+        <Kind>UnsignedInt</Kind>
+        <NumBits>32</NumBits>
+        <Name>unsigned int</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.PointerType" uuid="ef968473-c745-454e-9914-83bdd1ef488c">
+        <Type type="cxxfe.ast.types.BooleanType" uuid="681e7ac8-b153-42c8-a432-852943b152d5"/>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.BooleanType" uuid="681e7ac8-b153-42c8-a432-852943b152d5">
+        <Name>bool</Name>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.ArrayType" uuid="6b55937f-689e-4cde-99ed-537cef713200">
+        <Dimensions>0</Dimensions>
+        <Type type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+        <DefPos type="cxxfe.ast.source.SourcePosition" uuid="38e10ed8-9db9-4df4-aac9-59d00c3ad910">
+          <Col>35</Col>
+          <File type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377"/>
+          <Line>3</Line>
+        </DefPos>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.ArrayType" uuid="c3c0e874-c8b0-46e1-894b-72afe37cb3aa">
+        <Dimensions>0</Dimensions>
+        <Type type="cxxfe.ast.types.IntegerType" uuid="006bdf84-f771-441d-97ef-0ad620ab7daa"/>
+        <DefPos type="cxxfe.ast.source.SourcePosition" uuid="bb85aee3-cbe8-4911-8595-66bea4abb7f9">
+          <Col>82</Col>
+          <File type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377"/>
+          <Line>3</Line>
+        </DefPos>
+      </Symbols>
+      <Symbols type="cxxfe.ast.types.ArrayType" uuid="73e54f59-2224-4edb-992a-d2edb034ddec">
+        <Dimensions>0</Dimensions>
+        <Type type="cxxfe.ast.types.BooleanType" uuid="681e7ac8-b153-42c8-a432-852943b152d5"/>
+        <DefPos type="cxxfe.ast.source.SourcePosition" uuid="3ad9ba1d-a4e9-4f3f-8d64-66415a2052b6">
+          <Col>120</Col>
+          <File type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377"/>
+          <Line>3</Line>
+        </DefPos>
+      </Symbols>
+      <Symbols type="cxxfe.ast.Function" uuid="751d8382-fb11-4037-9045-66038b2c9d51">
+        <Params type="cxxfe.ast.Variable" uuid="31a96fb7-6dcd-4736-b38e-d7c3d1b5cfb3">
+          <Type type="cxxfe.ast.types.ArrayType" uuid="6b55937f-689e-4cde-99ed-537cef713200"/>
+          <Name>vertecies</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="3f683e50-70a7-4947-ae48-3fbb46349f47">
+          <Type type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+          <Name>lenVertices</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="b039b7d6-e2a0-4266-b947-4f7b3f4d7315">
+          <Type type="cxxfe.ast.types.ArrayType" uuid="c3c0e874-c8b0-46e1-894b-72afe37cb3aa"/>
+          <Name>triangleIDs</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="a7fa2371-40ba-4c69-8642-503af0803436">
+          <Type type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+          <Name>lenTriangleIDs</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="a0d2181c-ba68-4b62-9f1c-5a6de112a2a6">
+          <Type type="cxxfe.ast.types.ArrayType" uuid="73e54f59-2224-4edb-992a-d2edb034ddec"/>
+          <Name>shaded</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="59e0840b-e0cb-4045-a84e-d2cc5a5d0759">
+          <Type type="cxxfe.ast.types.TypedefType" uuid="f61b45db-fc99-4510-8774-03c530d3e9dc"/>
+          <Name>lenShaded</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="66aadfca-9cd1-4260-8655-394a1cd79f09">
+          <Type type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+          <Name>windX</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="97f0fdd9-2c14-4bc1-ad66-b1d763b900de">
+          <Type type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+          <Name>windY</Name>
+        </Params>
+        <Params type="cxxfe.ast.Variable" uuid="b3f5b467-239c-421e-97ab-107b15f7843c">
+          <Type type="cxxfe.ast.types.FloatType" uuid="0d9819fb-cff8-41cf-963f-e66ffa3957d8"/>
+          <Name>windZ</Name>
+        </Params>
+        <Linkage>ExternalCXX</Linkage>
+        <StorageClass>Extern</StorageClass>
+        <Type type="cxxfe.ast.types.FunctionType" uuid="146f84a0-9fca-4b81-a57d-08cb452e073a"/>
+        <Name>BinaryRenderer</Name>
+        <Annotations type="mwAnnotation.FunctionAnnotation" uuid="12bec216-e5e4-4a1d-9875-27895622e901">
+          <cppSignature>int BinaryRenderer(float [] vertecies,size_t lenVertices,unsigned int [] triangleIDs,size_t lenTriangleIDs,bool [] shaded,size_t lenShaded,float windX,float windY,float windZ)</cppSignature>
+          <cppSignatureFcnType>int(*)(float *, unsigned long long, unsigned int *, unsigned long long, bool *, unsigned long long, float, float, float)</cppSignatureFcnType>
+          <cppType>[int]</cppType>
+          <description>clib.BinaryShader.BinaryRenderer Representation of C++ function BinaryRenderer.</description>
+          <inputs type="mwAnnotation.Argument" uuid="64a0b7b4-ecc0-42e3-862a-59d38333534b">
+            <boxes>1</boxes>
+            <cppPosition>1</cppPosition>
+            <cppType>[float]Arr</cppType>
+            <mwType>clib.array.BinaryShader.Float</mwType>
+            <name>vertecies</name>
+            <shape>Array</shape>
+            <storage>Array</storage>
+            <validTypes>clib.array.BinaryShader.Float</validTypes>
+            <validTypes>single</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="f2330064-c279-4b2a-aa35-63ff741555de">
+            <cppPosition>2</cppPosition>
+            <cppType>[unsigned long long]</cppType>
+            <mwType>uint64</mwType>
+            <name>lenVertices</name>
+            <storage>Value</storage>
+            <validTypes>uint64</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="f8fef222-a8ec-4c37-81f3-497a581fcc3d">
+            <boxes>1</boxes>
+            <cppPosition>3</cppPosition>
+            <cppType>[unsigned int]Arr</cppType>
+            <mwType>clib.array.BinaryShader.UnsignedInt</mwType>
+            <name>triangleIDs</name>
+            <shape>Array</shape>
+            <storage>Array</storage>
+            <validTypes>clib.array.BinaryShader.UnsignedInt</validTypes>
+            <validTypes>uint32</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="10076662-c7d0-4ef9-8815-0dfab571c6aa">
+            <cppPosition>4</cppPosition>
+            <cppType>[unsigned long long]</cppType>
+            <mwType>uint64</mwType>
+            <name>lenTriangleIDs</name>
+            <storage>Value</storage>
+            <validTypes>uint64</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="d460dbf3-9a3d-4048-873e-d109af640a47">
+            <boxes>1</boxes>
+            <cppPosition>5</cppPosition>
+            <cppType>[bool]Arr</cppType>
+            <mwType>clib.array.BinaryShader.Bool</mwType>
+            <name>shaded</name>
+            <shape>Array</shape>
+            <storage>Array</storage>
+            <validTypes>clib.array.BinaryShader.Bool</validTypes>
+            <validTypes>logical</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="fbc35994-665a-4a4f-8c41-35f16b29361d">
+            <cppPosition>6</cppPosition>
+            <cppType>[unsigned long long]</cppType>
+            <mwType>uint64</mwType>
+            <name>lenShaded</name>
+            <storage>Value</storage>
+            <validTypes>uint64</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="75b14b16-81d1-4602-9e06-a7cea45188ec">
+            <cppPosition>7</cppPosition>
+            <cppType>[float]</cppType>
+            <mwType>single</mwType>
+            <name>windX</name>
+            <storage>Value</storage>
+            <validTypes>single</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="056168bf-41ab-4d23-8767-2bbe6375781e">
+            <cppPosition>8</cppPosition>
+            <cppType>[float]</cppType>
+            <mwType>single</mwType>
+            <name>windY</name>
+            <storage>Value</storage>
+            <validTypes>single</validTypes>
+          </inputs>
+          <inputs type="mwAnnotation.Argument" uuid="27f005cd-7e5b-4dfd-81fd-7afa61e66a4f">
+            <cppPosition>9</cppPosition>
+            <cppType>[float]</cppType>
+            <mwType>single</mwType>
+            <name>windZ</name>
+            <storage>Value</storage>
+            <validTypes>single</validTypes>
+          </inputs>
+          <name>clib.BinaryShader.BinaryRenderer</name>
+          <outputs type="mwAnnotation.Argument" uuid="acadefcb-fbfd-4466-9d5a-60bb692ebf5c">
+            <cppType>[int]</cppType>
+            <direction>Out</direction>
+            <isOwned>true</isOwned>
+            <mwType>int32</mwType>
+            <name>RetVal</name>
+            <storage>Value</storage>
+            <validTypes>int32</validTypes>
+          </outputs>
+          <ptKey>F/BinaryRenderer@[float]Arr,[unsigned long long],[unsigned int]Arr,[unsigned long long],[bool]Arr,[unsigned long long],[float],[float],[float]#[int]</ptKey>
+          <integrationStatus type="mwAnnotation.IntegrationStatus" uuid="99e2c6e0-3eed-413b-9735-005fe96de9e5">
+            <definitionStatus>PartiallySpecified</definitionStatus>
+          </integrationStatus>
+        </Annotations>
+        <DeclPos type="cxxfe.ast.source.SourcePosition" uuid="f8658447-33fe-410b-88b2-0f3189f5948f">
+          <Col>5</Col>
+          <File type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377"/>
+          <Line>3</Line>
+        </DeclPos>
+      </Symbols>
+    </Compilations>
+    <Files type="cxxfe.ast.source.SourceFile" uuid="b589dda0-d1cf-44ae-9514-8651a5280377">
+      <IsTopLevelFile>true</IsTopLevelFile>
+      <Path>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\BinaryShader.h</Path>
+      <WrittenName>C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\BinaryShader.h</WrittenName>
+    </Files>
+    <LongDoubleNumBits>64</LongDoubleNumBits>
+    <PointerNumBits>64</PointerNumBits>
+    <PtrDiffTypeKind>SignedLongLong</PtrDiffTypeKind>
+    <SizeTypeKind>UnsignedLongLong</SizeTypeKind>
+  </cxxfe.ast.Project>
+  <mwAnnotation.IntegrationStatus type="mwAnnotation.IntegrationStatus" uuid="ee94c4f3-e37d-4524-a4e8-bff4676eae3d"/>
+  <mwAnnotation.IntegrationStatus type="mwAnnotation.IntegrationStatus" uuid="9e5a0774-7b94-47f5-b954-af0a7e0de325"/>
+  <mwAnnotation.FunctionAnnotation type="mwAnnotation.FunctionAnnotation" uuid="f2bd347a-cfe0-4b90-8f1b-1b766e1bbb02"/>
+  <mwAnnotation.FunctionAnnotation type="mwAnnotation.FunctionAnnotation" uuid="fae6e717-a42c-4289-a990-56e3b222900a"/>
+  <mwAnnotation.IntegrationStatus type="mwAnnotation.IntegrationStatus" uuid="dcf5475c-1d94-440e-b624-ab9fce51d029"/>
+  <mwAnnotation.IntegrationStatus type="mwAnnotation.IntegrationStatus" uuid="cdc29299-d78a-4b4e-ae7f-6fc97cae05a0"/>
+  <mwAnnotation.FunctionAnnotation type="mwAnnotation.FunctionAnnotation" uuid="24a87476-9ce5-47fa-ba18-b3bf5be1e7a7"/>
+  <mwAnnotation.FundamentalArray type="mwAnnotation.FundamentalArray" uuid="06f5fdd3-a8ec-4f23-9e2f-e532eb26190e">
+    <cppElemType>bool</cppElemType>
+    <mlElemType>logical</mlElemType>
+    <name>clib.array.BinaryShader.Bool</name>
+  </mwAnnotation.FundamentalArray>
+  <mwAnnotation.FundamentalArray type="mwAnnotation.FundamentalArray" uuid="0a6cd610-8d77-4507-af49-2a9203a44c58">
+    <cppElemType>float</cppElemType>
+    <mlElemType>single</mlElemType>
+    <name>clib.array.BinaryShader.Float</name>
+  </mwAnnotation.FundamentalArray>
+  <mwAnnotation.FundamentalArray type="mwAnnotation.FundamentalArray" uuid="fe0cda3a-889a-40fa-acb4-ca7959374833">
+    <cppElemType>unsigned int</cppElemType>
+    <mlElemType>uint32</mlElemType>
+    <name>clib.array.BinaryShader.UnsignedInt</name>
+  </mwAnnotation.FundamentalArray>
+</MF0>
