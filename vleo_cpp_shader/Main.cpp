@@ -22,7 +22,7 @@ int main(void)
 		std::cout << "Visible Triangle IDs:" << std::endl;
 		for (unsigned int i = 0; i < numTriangles; ++i) {
 			if (visibleIDs[i]) {
-				std::cout << "Triangle ID " << i  << " is visible." << std::endl;
+				std::cout << "Triangle ID " << i+1  << " is visible." << std::endl;
 			}
 		}
 		std::cout << "----------------------------------------" << std::endl;

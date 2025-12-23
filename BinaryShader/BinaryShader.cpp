@@ -59,7 +59,7 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
 
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
     {
-        // framebuffer um ids zu zählen
+        // framebuffer um ids zu zï¿½hlen
         unsigned int NUM_PIXEL = 800;
         unsigned int IDtexture;
         GLCall(glGenTextures(1, &IDtexture));
@@ -70,7 +70,7 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         FB.UnBind();
 
 
-        // histogrambuffer für computeshader um pixel zu zählen
+        // histogrambuffer fï¿½r computeshader um pixel zu zï¿½hlen
         const int MAX_TRIANGLES = 65536 - 1;
         unsigned int histogramBuffer;
 
@@ -149,10 +149,10 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
             GLCall(glUnmapBuffer(GL_SHADER_STORAGE_BUFFER));
         }
 
-        // ID-Texture für Compute-Shader binden (binding = 0)
+        // ID-Texture fï¿½r Compute-Shader binden (binding = 0)
         GLCall(glBindImageTexture(0, IDtexture, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R16UI));
 
-        // Histogram-Buffer für Compute-Shader binden (binding = 1)
+        // Histogram-Buffer fï¿½r Compute-Shader binden (binding = 1)
         GLCall(glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, histogramBuffer));
 
         computeShader.Bind();
@@ -169,10 +169,10 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
 
         if (histogramData) {
             //std::cout << "Triangle Histogram:" << std::endl;
-            for (int i = 1; i < 10; i++) { // Nur erste 10 Triangle-IDs anzeigen
-                if (histogramData[i] > 0) {
+            for (int i = 0; i < lenTriangleIDs/3; i++) { // Nur erste 10 Triangle-IDs anzeigen
+                if(histogramData[i+1] > 0){
                     shaded[i] = true;
-                    std::cout << "Triangle ID " << i << ": " << histogramData[i] << " pixels" << std::endl;
+                    std::cout << "Triangle ID " << i+1 << ": " << histogramData[i+1] << " pixels" << std::endl;
                 }
             }
             GLCall(glUnmapBuffer(GL_SHADER_STORAGE_BUFFER));
