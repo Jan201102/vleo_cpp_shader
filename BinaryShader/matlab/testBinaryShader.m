@@ -1,5 +1,8 @@
 %% add lib to path
-addpath(fullfile(solutionDir,"BinaryShader/BinaryShader"))
+doc = matlab.desktop.editor.getActive
+doc.Filename
+folder = fileparts(doc.Filename)
+addpath(fullfile(folder,"/BinaryShader"));
 
 %% include teteagedron geometry
 run(fullfile(folder,"tetraeder.m"))

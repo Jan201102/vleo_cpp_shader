@@ -13,7 +13,7 @@ function libDef = defineBinaryShader()
 libDef = clibgen.LibraryDefinition("BinaryShaderData.xml");
 
 %% OutputFolder and Libraries 
-libDef.OutputFolder = "C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader";
+libDef.OutputFolder = "C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\BinaryShader\matlab";
 libDef.Libraries = [ "C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\x64\Release\BinaryShader.lib" "C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLEW\lib\Release\x64\glew32s.lib" "C:\Users\Jan_L\OneDrive\Dokumente\Arbeit\HIWI\IFR\vleo_cpp_shader\Dependencies\GLFW\lib-vc2022\glfw3.lib" "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\opengl32.lib" "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\user32.lib" "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\gdi32.lib" "C:\Program Files (x86)\Windows Kits\10\Lib\10.0.26100.0\um\x64\shell32.lib" ];
 
 %% C++ function |BinaryRenderer| with MATLAB name |clib.BinaryShader.BinaryRenderer|
@@ -33,7 +33,7 @@ defineArgument(BinaryRendererDefinition, "windX", "single");
 defineArgument(BinaryRendererDefinition, "windY", "single");
 defineArgument(BinaryRendererDefinition, "windZ", "single");
 defineOutput(BinaryRendererDefinition, "RetVal", "int32");
-validate(BinaryRendererDefinition);
+%validate(BinaryRendererDefinition);
 
 %% Validate the library definition
 validate(libDef);

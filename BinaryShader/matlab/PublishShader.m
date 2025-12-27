@@ -11,7 +11,8 @@ mex(['-setup:' compilerPath], 'C++')
 doc = matlab.desktop.editor.getActive
 doc.Filename
 folder = fileparts(doc.Filename)
-solutionDir = char(java.io.File(fullfile(folder,"../")).getCanonicalPath())
+solutionDir = char(java.io.File(fullfile(folder,"../../")).getCanonicalPath())
+outputDir = char(fullfile(solutionDir,"BinaryShader/matlab"))
 %%
 mainlib = fullfile(solutionDir,"x64/Release/BinaryShader.lib")
 mainHeader =  fullfile(solutionDir,"BinaryShader/BinaryShader.h")
@@ -59,6 +60,7 @@ end
 
 %%
 clibgen.generateLibraryDefinition(mainHeader,...
+    'OutputFolder',outputDir,...
     "Libraries", allLibs,...
     "IncludePath",[glmInclude,glewInclude,glfwInclude],...
     "DefinedMacros", "GLEW_STATIC",...
