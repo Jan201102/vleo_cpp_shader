@@ -131,6 +131,11 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         // Render zum framebuffer
         //=======================
 
+        // Enable face culling
+        GLCall(glEnable(GL_CULL_FACE));
+        GLCall(glCullFace(GL_BACK));
+        GLCall(glFrontFace(GL_CCW)); // Counter-clockwise is front-facing
+
         // PHASE 1: Zu ID-Framebuffer rendern
         FB.Bind();
         FB.Clear();

@@ -1,9 +1,10 @@
 %% add lib to path
+disp("Adding BinaryShader to path...");
 doc = matlab.desktop.editor.getActive
 doc.Filename
 folder = fileparts(doc.Filename)
 addpath(fullfile(folder,"/BinaryShader"));
-
+disp("Added BinaryShader to path.");
 %% include teteagedron geometry
 run(fullfile(folder,"tetraeder.m"))
 
@@ -18,7 +19,8 @@ triangleIDsArg = clibConvertArray("clib.BinaryShader.UnsignedInt",triangleIDs);
 % 4. Call the function
 try
     % Pass the clib objects and the uint64 lengths
-    clib.BinaryShader.BinaryRenderer(verticesArg,triangleIDsArg,shadedArg, 0.0, 0.0, 1.0);
+    disp("Calling BinaryRenderer...");
+    clib.BinaryShader.BinaryRenderer(verticesArg,triangleIDsArg,shadedArg, 0.0, 0.0, -1.0);
 
     % 5. Convert back to MATLAB to see the result
     finalShades = logical(shadedArg);
