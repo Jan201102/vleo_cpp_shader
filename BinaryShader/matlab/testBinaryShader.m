@@ -6,11 +6,11 @@ folder = fileparts(doc.Filename)
 addpath(fullfile(folder,"/BinaryShader"));
 disp("Added BinaryShader to path.");
 %% include teteagedron geometry
-run(fullfile(folder,"tetraeder.m"))
+run(fullfile(folder,"two_tetraedrons.m"))
 
 %% test call
 % 1. Define data
-shadedData = [false,false,false,false];
+shadedData = false(1,numTriangles/3);
 
 shadedArg = clibConvertArray("clib.BinaryShader.Bool",shadedData);
 verticesArg = clibConvertArray("clib.BinaryShader.Float",vertices);
@@ -20,7 +20,7 @@ triangleIDsArg = clibConvertArray("clib.BinaryShader.UnsignedInt",triangleIDs);
 try
     % Pass the clib objects and the uint64 lengths
     disp("Calling BinaryRenderer...");
-    clib.BinaryShader.BinaryRenderer(verticesArg,triangleIDsArg,shadedArg, 0.0, 0.0, -1.0);
+    clib.BinaryShader.BinaryRenderer(verticesArg,triangleIDsArg,shadedArg, 1.0, 0.0, 0.0);
 
     % 5. Convert back to MATLAB to see the result
     finalShades = logical(shadedArg);

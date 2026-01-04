@@ -22,7 +22,7 @@
 #include "res/shaders/Color_shader.h"
 
 
-int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleIDs[], size_t lenTriangleIDs, bool shaded[], size_t lenShaded,
+int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleIDs[], size_t lenTriangleIDs, bool isTriangleVisible[], size_t lenIsTriangleVisible,
     float windX, float windY, float windZ) {
 
     // Initialize GLFW
@@ -144,7 +144,7 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         shader.Bind();
         GLCall(glBindVertexArray(VAO));
         shader.setUniformMat4f("u_MVP", u_MVP);
-        glDrawArrays(GL_TRIANGLES, 0, 12);
+        glDrawArrays(GL_TRIANGLES, 0, lenVertices / 3);
 
         // Histogram-Buffer leeren
         GLCall(glBindBuffer(GL_SHADER_STORAGE_BUFFER, histogramBuffer));
@@ -154,10 +154,10 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
             GLCall(glUnmapBuffer(GL_SHADER_STORAGE_BUFFER));
         }
 
-        // ID-Texture f�r Compute-Shader binden (binding = 0)
+        // ID-Texture für Compute-Shader binden (binding = 0)
         GLCall(glBindImageTexture(0, IDtexture, 0, GL_FALSE, 0, GL_READ_ONLY, GL_R16UI));
 
-        // Histogram-Buffer f�r Compute-Shader binden (binding = 1)
+        // Histogram-Buffer für Compute-Shader binden (binding = 1)
         GLCall(glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, histogramBuffer));
 
         computeShader.Bind();
@@ -174,9 +174,9 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
 
         if (histogramData) {
             //std::cout << "Triangle Histogram:" << std::endl;
-            for (int i = 0; i < lenTriangleIDs/3; i++) { // Nur erste 10 Triangle-IDs anzeigen
+            for (unsigned int i = 0; i < lenIsTriangleVisible; i++) {
                 if(histogramData[i+1] > 0){
-                    shaded[i] = true;
+                    isTriangleVisible[i] = true;
                     std::cout << "Triangle ID " << i+1 << ": " << histogramData[i+1] << " pixels" << std::endl;
                 }
             }

@@ -23,5 +23,8 @@
     <ClInclude Include="res\geometries\tetraeder.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="res\geometries\tetraeder2.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

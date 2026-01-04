@@ -3,16 +3,17 @@
 #include <chrono>
 
 //geometry data
-#include "res/geometries/tetraeder.h"
+#include "res/geometries/tetraeder2.h"
 
 #include "BinaryShader.h"
 
 int main(void)
 {
-	float windX = 0.0f;
+	float windX = -1.0f;
 	float windY = 0.0f;
-	float windZ = 1.0f;
+	float windZ = 0.0f;
 	size_t const lenTriangleIDs = sizeof(triangleIDs) / sizeof(unsigned int);
+	static const unsigned int numTriangles = sizeof(triangleIDs) / sizeof(unsigned int) / 3;
 	bool visibleIDs[numTriangles] = { false };
 	size_t lenVertices = sizeof(vertices) / sizeof(float);
 	while (true) {
