@@ -28,6 +28,8 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
+!Dependencies/GLEW/bin/
+!Dependencies/GLEW/bin/**
 [Oo]bj/
 [Oo]ut/
 [Ll]og/
