@@ -9,7 +9,7 @@
 
 int main(void)
 {
-	float windX = -1.0f;
+	float windX = 1.0f;
 	float windY = 0.0f;
 	float windZ = 0.0f;
 	size_t const lenTriangleIDs = sizeof(triangleIDs) / sizeof(unsigned int);

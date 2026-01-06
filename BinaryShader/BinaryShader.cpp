@@ -131,6 +131,11 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         // Render zum framebuffer
         //=======================
 
+        // Enable depth testing for proper occlusion
+        GLCall(glEnable(GL_DEPTH_TEST));
+        GLCall(glDepthFunc(GL_LESS));
+        GLCall(glDepthMask(GL_TRUE));
+
         // Enable face culling
         GLCall(glEnable(GL_CULL_FACE));
         GLCall(glCullFace(GL_BACK));
@@ -144,6 +149,7 @@ int BinaryRenderer(float vertices[], size_t lenVertices, unsigned int triangleID
         shader.Bind();
         GLCall(glBindVertexArray(VAO));
         shader.setUniformMat4f("u_MVP", u_MVP);
+        std::cout << "Drawing " << lenVertices / 3 << " vertices (" << (lenVertices / 9) << " triangles)" << std::endl;
         glDrawArrays(GL_TRIANGLES, 0, lenVertices / 3);
 
         // Histogram-Buffer leeren

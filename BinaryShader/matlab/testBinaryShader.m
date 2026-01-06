@@ -10,7 +10,10 @@ run(fullfile(folder,"two_tetraedrons.m"))
 
 %% test call
 % 1. Define data
-shadedData = false(1,numTriangles/3);
+% Number of vertices and triangles
+numTriangles = length(triangleIDs)/3;
+
+shadedData = false(1,numTriangles);
 
 shadedArg = clibConvertArray("clib.BinaryShader.Bool",shadedData);
 verticesArg = clibConvertArray("clib.BinaryShader.Float",vertices);
