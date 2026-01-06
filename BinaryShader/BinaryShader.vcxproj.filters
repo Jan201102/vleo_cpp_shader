@@ -921,22 +921,13 @@
     <ClInclude Include="src\FrameBuffer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\IndexBuffer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="src\Shader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="src\VertexArray.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="src\VertexBuffer.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VertexBufferLayout.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="res\shaders\ID_shader.h">
@@ -1408,16 +1399,10 @@
     <ClCompile Include="src\FrameBuffer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\IndexBuffer.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VertexArray.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\VertexBuffer.cpp">
